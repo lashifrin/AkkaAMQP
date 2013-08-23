@@ -19,9 +19,9 @@ object AMQPConnection {
   def getConnection(): Connection = {
     connection match {
       case null => {
-        val factory = new ConnectionFactory();
-        factory.setHost(AMQPConnectionConfig.RABBITMQ_HOST);
-        factory.newConnection();
+        val factory = new ConnectionFactory()
+        factory.setHost(AMQPConnectionConfig.RABBITMQ_HOST)
+        factory.newConnection()
       }
       case _ => connection
     }
