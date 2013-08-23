@@ -5,15 +5,13 @@ import com.rabbitmq.client.Channel
 
 object Sender extends App {
   val system = ActorSystem("sender")
+  val sendingChannel = AMQPConnection.getConnection().createChannel()
+  sendingChannel.queueDeclare(AMQPConnectionConfig.RABBITMQ_QUEUE, false, false, false, null)
+  val sender = system.actorOf(Props(new AMQPPublisher(sendingChannel, AMQPConnectionConfig.RABBITMQ_QUEUE)))
+  sender ! "Hello World"
+}
+
+object StartListener extends App {
+  val system = ActorSystem("listener")
   val listener = system.actorOf(Props(new AMQPListener(AMQPConnection.getConnection().createChannel(), AMQPConnectionConfig.RABBITMQ_QUEUE)))
-
-  startSending
-
-  def startSending = {
-    val connection = AMQPConnection.getConnection()
-    val sendingChannel = connection.createChannel()
-    sendingChannel.queueDeclare(AMQPConnectionConfig.RABBITMQ_QUEUE, false, false, false, null)
-    val sender = system.actorOf(Props(new AMQPPublisher(channel = sendingChannel, queue = AMQPConnectionConfig.RABBITMQ_QUEUE)))
-    sender ! "Hello World"
-  }
 }
