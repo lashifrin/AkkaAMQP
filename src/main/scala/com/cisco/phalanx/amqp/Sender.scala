@@ -8,8 +8,8 @@ object Sender extends App {
   val sendingChannel = AMQPConnection.getConnection().createChannel()
   sendingChannel.queueDeclare(AMQPConnectionConfig.RABBITMQ_QUEUE, false, false, false, null)
   val sender = system.actorOf(Props(new AMQPPublisher(sendingChannel, AMQPConnectionConfig.RABBITMQ_QUEUE)))
-  // (1 to 1) map { i => sender ! "Hello World" }
-  sender ! "Hello World"
+  (1 to 10) map { i => sender ! "Hello World" }
+  // sender ! "Hello World"
 
 }
 
