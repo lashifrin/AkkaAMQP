@@ -4,9 +4,9 @@ import com.rabbitmq.client.Connection
 import com.rabbitmq.client.ConnectionFactory
 
 object AMQPConnectionConfig {
-  val RABBITMQ_HOST = "localhost"
-  val RABBITMQ_QUEUE = "splunkQueue"
-  val RABBITMQ_EXCHANGE = "splunkExchange"
+  val RABBITMQ_HOST = "127.0.0.1"
+  val RABBITMQ_QUEUE = "splunk-queue"
+  val RABBITMQ_EXCHANGE = "splunk-exchange"
 }
 
 object AMQPConnection {
